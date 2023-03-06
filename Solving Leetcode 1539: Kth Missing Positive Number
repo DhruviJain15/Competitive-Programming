@@ -1,0 +1,97 @@
+Solving Leetcode 1539: Kth Missing Positive Number
+
+Idea: What do I use:
+
+Hints: i) The array is sorted, ii) I need to kinda find some number
+
+Using Binary Search in such cases would significantly reduce the time complexity from O(n) through brute force to O(log n)
+
+Input and Output:
+
+Input: arr = [2,3,4,7,11], k = 5
+Output: 9
+Approach:
+
+I should ideally start from 1 until the end of the list.
+
+Since the length of the list is 5. The normal array should have been 1,2,3,4,5.
+
+So let us find the count of missing numbers: 
+
+    For index 0, arr[0]-[0+1]: 2-(1)=1
+
+Wait!! Where did this formula come from, how do I think of it?
+
+So, I just mentioned ideally, I wanted to start from 1 but our index starts from 0. So adding one to every index and subtracting the result from the number.
+
+Why are we subtracting the result from the number? Logic please!!
+
+Ok, so we know that this is an ordered list of numbers. So subtracting the number from the index say, I subtract 5(number) from 2(index+1) tells me that, 5 is at the place where ideally two should have been there. Hence, calculating their difference (3) indicates the missing number count from one to that index
+
+I hope this made it clearer!!
+
+Using binary search,
+
+mid=lower+(upper-lower)//2
+
+For, 2 , 3, 4, 7, 11;
+
+mid is always calculated with respect to index
+
+lower=0; upper=4; mid=(0+4)//2=2
+
+arr[2]=4; index+1=mid+1=2+1=3
+
+Missing count=4-3=1
+
+Since, missing count is less than k, start=mid+1
+
+Now start=3, end=4; mid=(3+4)//2=3
+
+arr[3]=7; index+1=4; missing count=7-4=3
+
+Is 3<k? Yes; move to the right: start=mid+1=4; end=4
+
+mid=(4+4)//2=4
+
+missing count=11-(4+1)=6; Is 6>k? Yes; move to the left
+
+end=mid-1
+
+end=3; start=4; Since start is greater than end the loop terminates.
+
+How do I find that number that k wants?
+
+So, wherever end is pointing that is important for us.
+
+arr[end]=arr[3]=7
+
+missing count=7-(3+1)=3
+
+Generalizing the missing count formula that we used: missing count= arr[index]-(index+1)
+
+But, I need the missing number. How to get that?
+
+So, We know that 3 numbers were missing before 7. Hence we subtract these 3 numbers from k. Hence, 5-3=2. This means this number that we are trying to find is the second number from 7.
+
+Hence, the number is 7+2=9
+
+Generalizing the calculation of missing number: missing number= arr[end]+k-(missing count)
+
+
+
+Code:
+
+class Solution:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        lower=0
+        upper=len(arr)-1
+        while lower<=upper:
+            mid=lower+((upper-lower)//2)
+            count=arr[mid]-(mid+1)
+            if count<k:
+                lower=mid+1
+            else:
+                upper=mid-1
+        count_num= arr[upper]+(k-(arr[upper]-(upper+1)))
+        return count_num    
