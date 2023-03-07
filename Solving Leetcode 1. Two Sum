@@ -1,0 +1,92 @@
+Solving Leetcode 1. Two Sum
+
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+Approach: The explanation itself gives the biggest hint, subtract one number from target to get the desired other number. This is what we are going to do.
+
+The first approach is the easiest and the most optimized approach: Use Hashmap
+
+Using Hashmap:
+
+Logic: 
+
+We simply perform subtraction of target and each element of nums array.
+Then check, if this difference exists in the maintained dictionary/ hashmap. If it exists, we return the current index and obtain the index of the difference from the hashmap.
+Otherwise, we store the element and its index in the hashmap, so that it is the desired answer for a future number whose difference with the target is equal to this number.
+Code:
+
+def twoSum(self, nums: List[int], target: int) -> List[int]:
+        '''
+        Approach 1
+        '''
+        nums_dict={}
+        for i in range(len(nums)):
+            if target-nums[i] in nums_dict:
+                return ([nums_dict[target-nums[i]],i])
+            nums_dict[nums[i]]=i
+
+Using Two Pointers:
+
+This is not as efficient as using hashmap but a different approach
+
+Logic:
+
+We create a duplicate array of nums, reason( we need to sort this array)
+
+Then why create a copy?
+
+So that the indexes in the initial array are maintained even when we sort the copy.
+
+Why do we need to sort:
+
+Sorting tells us where to move the two pointers,
+
+We maintain two pointers: One pointer points at the start and another pointer points at the end of the array.
+
+If the number at the start + number at the end is less than target:
+
+We move the pointer at the start of the array to the right by one (since we have sorted the numbers the numbers are from lesser to greater in order.)
+
+Otherwise, we move the pointer at the end to the left by one (to reduce the sum and reach closer to the target)
+
+Finally we store the two numbers obtained whose sum exactly matches the target as start and end
+
+Wait!! There's more to it....
+
+We create a final array to be returned initialised as final[-1,-1] indicating values of start index and end index
+
+Now, we need the index and not the number. So we again search for the number in the original array to find their indices. 
+
+Remember start always comes before end and there should not be any duplicates. So we put a condition donot change the number mentioned as final[0], denoting the start index once its value has been changed.
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        
+        
+        '''
+        2 pointer approach
+        '''
+        final=[-1,-1]
+        new_nums=nums.copy()
+        new_nums.sort()
+        start=0
+        end=len(nums)-1
+        while start<end:
+            if new_nums[start]+new_nums[end]==target:
+                start=new_nums[start]
+                end=new_nums[end]
+                break
+            elif new_nums[start]+new_nums[end]>target:
+                #Here you realise that sorting is important
+                end=end-1
+            else:
+                start=start+1
+        print(start,end)
+        for i in range(len(nums)):
+            if nums[i]==start and final[0]==-1:
+                final[0]=i
+            elif nums[i]==end:
+                final[1]=i
+        return final
+         
