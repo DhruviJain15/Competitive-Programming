@@ -7,7 +7,7 @@ class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         head1=l1
         head2=l2
-        head=ListNode()
+        head=head1
         start=head
         sum=0
         carry=0
@@ -25,7 +25,6 @@ class Solution:
             sum=h1+h2+carry
             carry=sum//10
             value=sum%10
-            head.val=value
+            head.next=ListNode(value)
             head=head.next
-        return start
-            
+        return start.next
