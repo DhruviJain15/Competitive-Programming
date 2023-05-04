@@ -1,0 +1,19 @@
+class Solution:
+    def reverse(self, x: int) -> int:
+        ll=-(2**31)
+        ul=((2**31)-1)
+        #Logic for reversing any integer
+        summ=0
+        rem=1
+        if x>=0:
+            val=1
+        else:
+            val=-1
+        x=abs(x)
+        while x!=0:
+            rem=x%10
+            summ=summ*10+rem
+            if summ<=ll or summ>=ul:
+                return 0
+            x=x//10
+        return summ*val
