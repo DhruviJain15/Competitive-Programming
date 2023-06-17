@@ -1,0 +1,32 @@
+# Intuition
+The approach is to find the left product and right product of the element and merge them to find the final product.
+
+# Complexity
+- Time complexity:
+O(n)
+
+- Space complexity:
+O(n)
+
+# Code
+```
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        left=nums[:]
+        right=nums[:]
+        product=nums[:]
+        for i in range(len(nums)):
+            if i==0:
+                left[i]=1
+            else:
+                left[i]=nums[i-1]*left[i-1]
+        print(left)
+        for i in range(len(nums)-1,-1,-1):
+            if i==len(nums)-1:
+                right[i]=1
+            else:
+                right[i]=nums[i+1]*right[i+1]
+                #print(i,",",right[i])
+            product[i]=right[i]*left[i]
+        return product
+        
