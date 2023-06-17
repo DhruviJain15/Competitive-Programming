@@ -1,0 +1,28 @@
+ # Intuition
+Maintain a dictionary with a count. As soon as the count becomes 2. Return true otherwise return false at the end of the loop.
+
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+# Complexity
+- Time complexity:
+O(n)
+
+- Space complexity:
+O(n) 
+
+# Code
+```
+class Solution:
+    def containsDuplicate(self, nums: List[int]) -> bool:
+        dictn={}
+        for i in range(len(nums)):
+            if nums[i] not in dictn:
+                dictn[nums[i]]=1
+            else:
+                dictn[nums[i]]+=1
+            if dictn[nums[i]]>=2:
+                return True
+        return False
+
+```
