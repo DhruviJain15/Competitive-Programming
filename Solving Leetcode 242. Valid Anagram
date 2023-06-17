@@ -1,0 +1,33 @@
+# Intuition
+The idea iis to create two dictionaries maintaing the count of the letters in the words and comparing them
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+# Complexity
+- Time complexity:
+O(n)
+
+- Space complexity:
+O(len(s)*len(t))
+
+# Code
+```
+class Solution:
+    def isAnagram(self, s: str, t: str) -> bool:
+        if len(s)!=len(t):
+            return False
+        dicts={}
+        dictt={}
+        for i in range(len(s)):
+            if s[i] not in dicts:
+                dicts[s[i]]=1
+            else:
+                dicts[s[i]]+=1
+            if t[i] not in dictt:
+                dictt[t[i]]=1
+            else:
+                dictt[t[i]]+=1
+        if dicts==dictt:
+            return True
+        else:
+            return False
