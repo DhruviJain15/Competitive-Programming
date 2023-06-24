@@ -1,0 +1,21 @@
+# Intuition
+Using Bitwise Exor Operation 
+
+# Approach
+<!-- Describe your approach to solving the problem. -->
+
+# Complexity
+- Time complexity:
+O(n)
+
+- Space complexity:
+O(1)
+
+# Code
+```
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        res=0
+        for i in range(len(nums)):
+            res^=nums[i]
+        return res
